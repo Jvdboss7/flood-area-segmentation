@@ -1,0 +1,8 @@
+tensorflow==2.9.2
+tqdm
+opencv-python
+matplotlib
+pandas 
+jupyter
+segmentation_models
+albumentations
