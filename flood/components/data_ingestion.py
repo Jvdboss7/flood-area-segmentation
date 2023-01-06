@@ -67,7 +67,8 @@ class DataIngestion:
 
             logging.info("Unzipped file and split into train and valid")
 
-            data_ingestion_artifacts = DataIngestionArtifacts(image_data_file_path=image_data_file_path,
+            data_ingestion_artifacts = DataIngestionArtifacts(root_dir=self.data_ingestion_config.DATA_INGESTION_ARTIFACTS_DIR, 
+                                                            image_data_file_path=image_data_file_path,
                                                               masks_data_file_path=masks_data_file_path,
                                                               metadata_file_path=metadata_file_path)
 

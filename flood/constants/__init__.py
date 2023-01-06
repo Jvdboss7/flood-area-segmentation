@@ -12,3 +12,10 @@ DATA_INGESTION_ARTIFACTS_DIR = "DataIngestionArtifacts"
 IMAGE = "Image"
 MASK = "Mask"
 METADATA = "metadata.csv"
+
+# Data transformation constants
+DATA_TRANSFORMATION_ARTIFACTS_DIR = 'DataTransformationArtifacts'
+IMG_SIZE = (224,224)
+BATCH_SIZE = 8
+TRAIN_FILE_NAME = "train_dataset"
+TEST_FILE_NAME = "test_dataset"
