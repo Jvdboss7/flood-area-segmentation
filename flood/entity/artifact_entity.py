@@ -8,7 +8,12 @@ class DataIngestionArtifacts:
     masks_data_file_path: str
     metadata_file_path: str
 
-@dataclass
-class DataTransformationArtifacts:
-    train_data_path: str
-    test_data_path: str 
+# @dataclass
+# class DataTransformationArtifacts:
+#     train_data_path: str
+#     test_data_path: str 
+
+@dataclass 
+class ModelTrainerArtifacts:
+    trained_model_path: str
+    # test_dataset: str

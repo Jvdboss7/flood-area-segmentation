@@ -19,3 +19,8 @@ IMG_SIZE = (224,224)
 BATCH_SIZE = 8
 TRAIN_FILE_NAME = "train_dataset"
 TEST_FILE_NAME = "test_dataset"
+
+# Model training constants
+MODEL_TRAINER_ARTIFACTS_DIR = 'ModelTrainerArtifacts'
+TRAINED_MODEL_DIR = 'trained_model'
+TRAINED_MODEL_NAME = 'model.h5'
