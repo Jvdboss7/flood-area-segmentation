@@ -12,9 +12,9 @@ from keras import backend as K
 import matplotlib.pyplot as plt
 import segmentation_models as sm
 from flood.logger import logging 
-# from flood.utils.all_utils import utils
 from flood.exception import CustomException
 from sklearn.model_selection import train_test_split
+from flood.utils.all_utils import utils
 from flood.entity.config_entity import ModelTrainerConfig
 from flood.entity.artifact_entity import DataIngestionArtifacts, ModelTrainerArtifacts
 from keras.layers import Dense, Dropout, Input, add, Conv2D, BatchNormalization, MaxPooling2D, Conv2DTranspose,Activation, Concatenate
@@ -23,7 +23,7 @@ class ModelTrainer:
     def __init__(self,model_trainer_config: ModelTrainerConfig,data_ingestion_artifacts:DataIngestionArtifacts):
         self.model_trainer_config = model_trainer_config
         self.data_ingestion_artifacts = data_ingestion_artifacts
-        #self.utils = utils
+        self.utils = utils
 
     def load_data(self):
         try:
@@ -131,18 +131,18 @@ class ModelTrainer:
         except Exception as e:
             raise CustomException(e,sys) from e
     # Creating the model
-    def create_model(self):
-        try:
-            logging.info("Entered the create_model function")
-            model = sm.Unet('efficientnetb2', 
-                            input_shape = (224,224,3), 
-                            classes = 1, 
-                            activation='sigmoid', 
-                            encoder_weights='imagenet')
-            logging.info("Exited the create_model function ")
-            return model 
-        except Exception as e:
-            raise CustomException(e,sys) from e
+    # def create_model(self):
+    #     try:
+    #         logging.info("Entered the create_model function")
+    #         model = sm.Unet('efficientnetb2', 
+    #                         input_shape = (224,224,3), 
+    #                         classes = 1, 
+    #                         activation='sigmoid', 
+    #                         encoder_weights='imagenet')
+    #         logging.info("Exited the create_model function ")
+    #         return model 
+    #     except Exception as e:
+    #         raise CustomException(e,sys) from e
 
     def initiate_model_trainer(self) -> ModelTrainerArtifacts:
         try:
@@ -159,9 +159,10 @@ class ModelTrainer:
             print(f"========={type(train_dataset)}===========")
             print(f"========={type(test_dataset)}===========")
 
-            model = self.create_model()
+            model = self.utils.create_model()
+            # model = self.create_model()
             # To check the model summary
-            model.summary()
+            # model.summary()
             # Compiling the model
             model.compile(
                 optimizer = keras.optimizers.Adam(learning_rate = 2e-3),
@@ -169,7 +170,7 @@ class ModelTrainer:
                 metrics = [sm.metrics.iou_score],
             )
 
-            history = model.fit(train_dataset, validation_data = test_dataset, epochs = 10)
+            history = model.fit(train_dataset, validation_data = test_dataset, epochs = 5)
             print(f"---------------{history.history}--------------")
             
             model.save(self.model_trainer_config.TRAINED_MODEL_PATH)
@@ -177,7 +178,8 @@ class ModelTrainer:
             os.makedirs(self.model_trainer_config.TRAINED_MODEL_DIR,exist_ok=True)
 
             model_trainer_artifacts = ModelTrainerArtifacts(
-                trained_model_path = self.model_trainer_config.TRAINED_MODEL_PATH)
+                trained_model_path = self.model_trainer_config.TRAINED_MODEL_PATH,
+                test_dataset=test_dataset)
             logging.info("Returning the ModelTrainerArtifacts")
             return model_trainer_artifacts           
         except Exception as e:
