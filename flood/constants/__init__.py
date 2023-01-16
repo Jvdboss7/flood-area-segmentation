@@ -7,23 +7,22 @@ BUCKET_NAME = 'flood-area'
 ZIP_FILE_NAME = 'datasets.zip'
 
 # Data ingestion constants 
-
 DATA_INGESTION_ARTIFACTS_DIR = "DataIngestionArtifacts"
 IMAGE = "Image"
 MASK = "Mask"
 METADATA = "metadata.csv"
 
-
 IMG_SIZE = (224,224)
 BATCH_SIZE = 8
-# TRAIN_FILE_NAME = "train_dataset"
-# TEST_FILE_NAME = "test_dataset"
 
 # Model training constants
 MODEL_TRAINER_ARTIFACTS_DIR = 'ModelTrainerArtifacts'
 TRAINED_MODEL_DIR = 'trained_model'
 TRAINED_MODEL_NAME = 'model.h5'
-TEST_DATASET: str = 'kerasNativeTestData'
+EPOCHS = 5
+LEARNING_RATE = 2e-3
+TEST_SIZE = 0.3
+
 # Model  Evaluation constants
 MODEL_EVALUATION_ARTIFACTS_DIR = 'ModelEvaluationArtifacts'
 BEST_MODEL_DIR = "best_Model"

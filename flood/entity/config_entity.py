@@ -19,7 +19,6 @@ class ModelTrainerConfig:
     def __init__(self):
         self.TRAINED_MODEL_DIR: str = os.path.join(os.getcwd(),ARTIFACTS_DIR,MODEL_TRAINER_ARTIFACTS_DIR) 
         self.TRAINED_MODEL_PATH = os.path.join(self.TRAINED_MODEL_DIR,TRAINED_MODEL_NAME)
-        self.TEST_DATASET: str = os.path.join(TRAINED_MODEL_DIR,TEST_DATASET)
 
 @dataclass
 class ModelEvaluationConfig: 
@@ -28,11 +27,9 @@ class ModelEvaluationConfig:
         self.BEST_MODEL_DIR_PATH: str = os.path.join(self.MODEL_EVALUATION_MODEL_DIR,BEST_MODEL_DIR)
         self.BUCKET_NAME = BUCKET_NAME 
         self.MODEL_NAME = MODEL_NAME 
-        self.TEST_DATASET: str = os.path.join(TRAINED_MODEL_DIR,TEST_DATASET)
-
+    
 @dataclass
 class ModelPusherConfig:
-
     def __init__(self):
         self.TRAINED_MODEL_PATH = os.path.join(os.getcwd(),ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR)
         self.BUCKET_NAME = BUCKET_NAME

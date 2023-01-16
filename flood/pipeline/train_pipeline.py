@@ -7,7 +7,6 @@ from flood.components.model_evaluation import ModelEvaluation
 from flood.components.model_pusher import ModelPusher
 from flood.entity.config_entity import DataIngestionConfig, ModelTrainerConfig,ModelEvaluationConfig,ModelPusherConfig
 from flood.entity.artifact_entity import DataIngestionArtifacts, ModelTrainerArtifacts,ModelEvaluationArtifacts,ModelPusherArtifacts
-# from flood.utils.all_utils import utils
 class TrainPipeline:
     def __init__(self):
         self.data_ingestion_config = DataIngestionConfig()
@@ -77,9 +76,6 @@ class TrainPipeline:
         try:
             data_ingestion_artifacts = self.start_data_ingestion()
 
-            # data_transformation_artifacts = self.start_data_transformation(
-            #     data_ingestion_artifacts=data_ingestion_artifacts
-            # )
             model_trainer_artifacts = self.start_model_trainer(
                 data_ingestion_artifacts = data_ingestion_artifacts
             )

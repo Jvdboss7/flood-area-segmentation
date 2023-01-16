@@ -102,7 +102,7 @@ class ModelTrainer:
     def split_data(self,df):
         try:
             logging.info("Entered the split_data function")
-            df_train, df_test = train_test_split(df, test_size = 0.3)
+            df_train, df_test = train_test_split(df, test_size = TEST_SIZE)
 
             print(df_train.shape, df_test.shape)
 
@@ -130,19 +130,6 @@ class ModelTrainer:
             return 1-self.dice_coef(y_true, y_pred)
         except Exception as e:
             raise CustomException(e,sys) from e
-    # Creating the model
-    # def create_model(self):
-    #     try:
-    #         logging.info("Entered the create_model function")
-    #         model = sm.Unet('efficientnetb2', 
-    #                         input_shape = (224,224,3), 
-    #                         classes = 1, 
-    #                         activation='sigmoid', 
-    #                         encoder_weights='imagenet')
-    #         logging.info("Exited the create_model function ")
-    #         return model 
-    #     except Exception as e:
-    #         raise CustomException(e,sys) from e
 
     def initiate_model_trainer(self) -> ModelTrainerArtifacts:
         try:
@@ -160,17 +147,18 @@ class ModelTrainer:
             print(f"========={type(test_dataset)}===========")
 
             model = self.utils.create_model()
-            # model = self.create_model()
             # To check the model summary
-            # model.summary()
+
+            model.summary()
+
             # Compiling the model
             model.compile(
-                optimizer = keras.optimizers.Adam(learning_rate = 2e-3),
+                optimizer = keras.optimizers.Adam(learning_rate = LEARNING_RATE),
                 loss = keras.losses.BinaryCrossentropy(),
                 metrics = [sm.metrics.iou_score],
             )
 
-            history = model.fit(train_dataset, validation_data = test_dataset, epochs = 5)
+            history = model.fit(train_dataset, validation_data = test_dataset, epochs = EPOCHS)
             print(f"---------------{history.history}--------------")
             
             model.save(self.model_trainer_config.TRAINED_MODEL_PATH)
