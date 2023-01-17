@@ -33,13 +33,13 @@ class ModelEvaluation:
         try:
             logging.info("Entered the get_best_model_from_gcloud method of Model Evaluation class")
 
-            os.makedirs(self.model_evaluation_config.BEST_MODEL_DIR_PATH, exist_ok=True)
+            os.makedirs(self.model_evaluation_config.MODEL_EVALUATION_ARTIFACT_DIR, exist_ok=True)
 
             self.gcloud.sync_model_from_gcloud(self.model_evaluation_config.BUCKET_NAME, 
                                                 self.model_evaluation_config.MODEL_DIR,
-                                                self.model_evaluation_config.BEST_MODEL_DIR_PATH)
+                                                self.model_evaluation_config.MODEL_EVALUATION_ARTIFACT_DIR)
 
-            best_model_path = self.model_evaluation_config.BEST_MODEL_DIR_PATH
+            best_model_path = os.path.join(self.model_evaluation_config.MODEL_EVALUATION_ARTIFACT_DIR, MODEL_DIR)
             logging.info("Exited the get_best_model_from_gcloud method of Model Evaluation class")
             return best_model_path
         except Exception as e:
@@ -85,7 +85,7 @@ class ModelEvaluation:
             gcloud_loss = None 
             print(f"--------------------------{gcloud_model_path}--------------------------------")
             # print(f"{os.path.isfile(gcloud_model_path)}")
-            if os.path.isfile(gcloud_model_path) is False: 
+            if os.path.isdir(gcloud_model_path) is False: 
                 is_model_accepted = True
                 print("s3 model is false and model accepted is true")
                 gcloud_loss = None
