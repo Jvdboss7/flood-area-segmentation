@@ -3,15 +3,17 @@ from flood.logger import logging
 from flood.exception import CustomException
 from flood.configuration.gcloud_syncer import GCloudSync
 from flood.entity.config_entity import ModelPusherConfig
-from flood.entity.artifact_entity import ModelPusherArtifacts
+from flood.entity.artifact_entity import ModelPusherArtifacts, ModelTrainerArtifacts
 
 
 class ModelPusher:
-    def __init__(self, model_pusher_config: ModelPusherConfig):
+    def __init__(self, model_pusher_config: ModelPusherConfig, 
+                    model_trainer_artifacts: ModelTrainerArtifacts):
         """
         :param model_pusher_config: Configuration for model pusher
         """
         self.model_pusher_config = model_pusher_config
+        self.model_trainer_artifacts = model_trainer_artifacts
         self.gcloud = GCloudSync()
 
     def initiate_model_pusher(self) -> ModelPusherArtifacts:
@@ -25,8 +27,8 @@ class ModelPusher:
             # Uploading the model to gcloud storage
 
             self.gcloud.sync_folder_to_gcloud(self.model_pusher_config.BUCKET_NAME,
-                                              self.model_pusher_config.TRAINED_MODEL_PATH,
-                                              self.model_pusher_config.MODEL_NAME)
+                                                self.model_trainer_artifacts.trained_model_path
+                                                )
 
             logging.info("Uploaded best model to gcloud storage")
 

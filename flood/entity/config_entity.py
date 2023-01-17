@@ -17,20 +17,20 @@ class DataIngestionConfig:
 @dataclass
 class ModelTrainerConfig: 
     def __init__(self):
-        self.TRAINED_MODEL_DIR: str = os.path.join(os.getcwd(),ARTIFACTS_DIR,MODEL_TRAINER_ARTIFACTS_DIR) 
-        self.TRAINED_MODEL_PATH = os.path.join(self.TRAINED_MODEL_DIR,TRAINED_MODEL_NAME)
+        self.MODEL_TRAINER_ARTIFACT_DIR: str = os.path.join(os.getcwd(),ARTIFACTS_DIR,MODEL_TRAINER_ARTIFACTS_DIR) 
+        self.TRAINED_MODEL_PATH = os.path.join(self.MODEL_TRAINER_ARTIFACT_DIR,TRAINED_MODEL_DIR)
 
 @dataclass
 class ModelEvaluationConfig: 
     def __init__(self):
-        self.MODEL_EVALUATION_MODEL_DIR: str = os.path.join(os.getcwd(),ARTIFACTS_DIR, MODEL_EVALUATION_ARTIFACTS_DIR)
-        self.BEST_MODEL_DIR_PATH: str = os.path.join(self.MODEL_EVALUATION_MODEL_DIR,BEST_MODEL_DIR)
+        self.MODEL_EVALUATION_ARTIFACT_DIR: str = os.path.join(os.getcwd(),ARTIFACTS_DIR, MODEL_EVALUATION_ARTIFACTS_DIR)
+        self.BEST_MODEL_DIR_PATH: str = os.path.join(self.MODEL_EVALUATION_ARTIFACT_DIR,BEST_MODEL_DIR)
         self.BUCKET_NAME = BUCKET_NAME 
-        self.MODEL_NAME = MODEL_NAME 
+        self.MODEL_DIR = MODEL_DIR
     
 @dataclass
 class ModelPusherConfig:
     def __init__(self):
         self.TRAINED_MODEL_PATH = os.path.join(os.getcwd(),ARTIFACTS_DIR, MODEL_TRAINER_ARTIFACTS_DIR)
         self.BUCKET_NAME = BUCKET_NAME
-        self.MODEL_NAME = MODEL_NAME
+        self.MODEL_DIR = MODEL_DIR

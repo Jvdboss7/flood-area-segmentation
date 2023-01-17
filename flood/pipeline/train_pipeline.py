@@ -56,11 +56,12 @@ class TrainPipeline:
         except Exception as e:
             raise CustomException(e, sys) from e
 
-    def start_model_pusher(self,) -> ModelPusherArtifacts:
+    def start_model_pusher(self,model_trainer_artifacts: ModelTrainerArtifacts) -> ModelPusherArtifacts:
         logging.info("Entered the start_model_pusher method of TrainPipeline class")
         try:
             model_pusher = ModelPusher(
                 model_pusher_config=self.model_pusher_config,
+                 model_trainer_artifacts=model_trainer_artifacts
             )
             model_pusher_artifact = model_pusher.initiate_model_pusher()
             logging.info("Initiated the model pusher")
@@ -85,7 +86,7 @@ class TrainPipeline:
             if not model_evaluation_artifacts.is_model_accepted:
                 raise Exception("Trained model is not better than the best model")
 
-            model_pusher_artifacts = self.start_model_pusher()
+            model_pusher_artifacts = self.start_model_pusher(model_trainer_artifacts=model_trainer_artifacts)
 
             logging.info("Exited the run_pipeline method of TrainPipeline class")    
          

@@ -14,7 +14,7 @@ import segmentation_models as sm
 from flood.logger import logging 
 from flood.exception import CustomException
 from sklearn.model_selection import train_test_split
-from flood.utils.all_utils import utils
+from flood.utils.all_utils import create_model
 from flood.entity.config_entity import ModelTrainerConfig
 from flood.entity.artifact_entity import DataIngestionArtifacts, ModelTrainerArtifacts
 from keras.layers import Dense, Dropout, Input, add, Conv2D, BatchNormalization, MaxPooling2D, Conv2DTranspose,Activation, Concatenate
@@ -23,7 +23,7 @@ class ModelTrainer:
     def __init__(self,model_trainer_config: ModelTrainerConfig,data_ingestion_artifacts:DataIngestionArtifacts):
         self.model_trainer_config = model_trainer_config
         self.data_ingestion_artifacts = data_ingestion_artifacts
-        self.utils = utils
+        
 
     def load_data(self):
         try:
@@ -146,7 +146,7 @@ class ModelTrainer:
             print(f"========={type(train_dataset)}===========")
             print(f"========={type(test_dataset)}===========")
 
-            model = self.utils.create_model()
+            model = create_model()
             # To check the model summary
 
             model.summary()
@@ -154,17 +154,16 @@ class ModelTrainer:
             # Compiling the model
             model.compile(
                 optimizer = keras.optimizers.Adam(learning_rate = LEARNING_RATE),
-                loss = keras.losses.BinaryCrossentropy(),
-                metrics = [sm.metrics.iou_score],
+                loss = keras.losses.BinaryCrossentropy()
             )
 
             history = model.fit(train_dataset, validation_data = test_dataset, epochs = EPOCHS)
             print(f"---------------{history.history}--------------")
             
+
+            os.makedirs(self.model_trainer_config.TRAINED_MODEL_PATH,exist_ok=True)
             model.save(self.model_trainer_config.TRAINED_MODEL_PATH)
-
-            os.makedirs(self.model_trainer_config.TRAINED_MODEL_DIR,exist_ok=True)
-
+            # trained_model_path = self.model_trainer_config.TRAINED_MODEL_PATH
             model_trainer_artifacts = ModelTrainerArtifacts(
                 trained_model_path = self.model_trainer_config.TRAINED_MODEL_PATH,
                 test_dataset=test_dataset)
