@@ -8,6 +8,8 @@ TIMESTAMP: str = datetime.now().strftime("%m_%d_%Y_%H_%M_%S")
 ARTIFACTS_DIR = os.path.join("artifacts", TIMESTAMP)
 BUCKET_NAME = 'flood-area'
 ZIP_FILE_NAME = 'datasets.zip'
+APP_HOST = "0.0.0.0"
+APP_PORT = 8080
 
 # Data ingestion constants 
 DATA_INGESTION_ARTIFACTS_DIR = "DataIngestionArtifacts"
@@ -22,7 +24,7 @@ BATCH_SIZE = 8
 MODEL_TRAINER_ARTIFACTS_DIR = 'ModelTrainerArtifacts'
 TRAINED_MODEL_DIR = 'trained_model'
 # TRAINED_MODEL_NAME = 'model'
-EPOCHS = 1
+EPOCHS = 100
 LEARNING_RATE = 2e-3
 TEST_SIZE = 0.3
 

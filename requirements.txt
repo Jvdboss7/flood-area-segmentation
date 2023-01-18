@@ -6,3 +6,7 @@ pandas
 jupyter
 segmentation_models
 albumentations
+Jinja2
+fastapi
+uvicorn
+python-multipart
